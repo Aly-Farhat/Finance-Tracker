@@ -1,0 +1,17 @@
+{
+  "name": "finance-tracker-desktop",
+  "version": "1.0.0",
+  "description": "Finance Tracker Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager . \"Finance Tracker\" --platform=win32 --arch=x64 --out=dist --overwrite --no-prune --ignore=\"(dist|\\.git|\\.vscode)\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-packager": "^17.1.2"
+  }
+}
+
