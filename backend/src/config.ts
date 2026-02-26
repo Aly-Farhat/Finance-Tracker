@@ -11,8 +11,8 @@ export const config = {
   rateLimitMaxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
   logLevel: process.env.LOG_LEVEL || 'info',
   jwtSecret: process.env.JWT_SECRET || 'change-this-secret-in-production',
+  backupToken: process.env.BACKUP_TOKEN?.trim() || null,
 } as const
 
 export const isDevelopment = config.nodeEnv === 'development'
 export const isProduction = config.nodeEnv === 'production'
-

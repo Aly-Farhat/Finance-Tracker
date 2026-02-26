@@ -48,17 +48,6 @@ router.get('/', asyncHandler(async (req, res) => {
   })
 }))
 
-// Get transaction by ID
-router.get('/:id', validateId, asyncHandler(async (req, res) => {
-  const transaction = db.prepare('SELECT * FROM transactions WHERE id = ?').get(req.params.id)
-  
-  if (!transaction) {
-    throw new AppError(404, 'Transaction not found')
-  }
-  
-  res.json(transaction)
-}))
-
 // Create transaction
 router.post('/', validateTransaction, asyncHandler(async (req, res) => {
   const { type, category, amount, description, date, source } = req.body
@@ -178,5 +167,15 @@ router.get('/stats/summary', asyncHandler(async (req, res) => {
   res.json({ data: stats })
 }))
 
-export default router
+// Get transaction by ID
+router.get('/:id', validateId, asyncHandler(async (req, res) => {
+  const transaction = db.prepare('SELECT * FROM transactions WHERE id = ?').get(req.params.id)
+  
+  if (!transaction) {
+    throw new AppError(404, 'Transaction not found')
+  }
+  
+  res.json(transaction)
+}))
 
+export default router

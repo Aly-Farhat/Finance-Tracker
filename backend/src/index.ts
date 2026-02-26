@@ -93,6 +93,29 @@ app.get('/api/health', (req, res) => {
 
 // Backup endpoint (for admin use)
 app.post('/api/backup', (req, res) => {
+  const token = req.get('x-backup-token')
+
+  if (config.backupToken && token !== config.backupToken) {
+    logger.warn('Unauthorized backup attempt', {
+      ip: req.ip,
+      path: req.path,
+    })
+
+    return res.status(401).json({
+      status: 'error',
+      message: 'Unauthorized',
+    })
+  }
+
+  if (!config.backupToken && config.nodeEnv === 'production') {
+    logger.error('Backup endpoint misconfigured: BACKUP_TOKEN is required in production')
+
+    return res.status(503).json({
+      status: 'error',
+      message: 'Backup endpoint is not configured',
+    })
+  }
+
   try {
     const backupPath = backupDatabase()
     res.json({
